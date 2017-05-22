@@ -53,7 +53,8 @@ class remoteapicore_test extends DokuWikiTest {
 
     public function test_getPageList() {
         $file1 = wikiFN('wiki:dokuwiki');
-        $file2 = wikiFN('wiki:syntax');
+        $file2 = wikiFN('wiki:editandsavetest');
+        $file3 = wikiFN('wiki:syntax');
         $expected = array(
             array(
                 'id' => 'wiki:dokuwiki',
@@ -63,10 +64,17 @@ class remoteapicore_test extends DokuWikiTest {
                 'hash' => md5(trim(rawWiki('wiki:dokuwiki')))
             ),
             array(
-                'id' => 'wiki:syntax',
+                'id' => 'wiki:editandsavetest',
                 'rev' => filemtime($file2),
                 'mtime' => filemtime($file2),
                 'size' => filesize($file2),
+                'hash' => md5(trim(rawWiki('wiki:editandsavetest')))
+            ),
+            array(
+                'id' => 'wiki:syntax',
+                'rev' => filemtime($file3),
+                'mtime' => filemtime($file3),
+                'size' => filesize($file3),
                 'hash' => md5(trim(rawWiki('wiki:syntax')))
             )
         );
