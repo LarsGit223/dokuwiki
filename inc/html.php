@@ -91,7 +91,7 @@ function html_denied() {
 function html_secedit($text,$show=true){
     global $INFO;
 
-    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )(?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
+    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )(?:"([^"]*)" )(?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
 
     if(!$INFO['writable'] || !$show || $INFO['rev']){
         return preg_replace($regexp,'',$text);
@@ -115,8 +115,9 @@ function html_secedit_button($matches){
     $data = array('secid'  => $matches[1],
                   'target' => strtolower($matches[2]),
                   'hid' => strtolower($matches[4]),
+                  'codeblockOffset' => strtolower($matches[5]),
                   'range'  => $matches[count($matches) - 1]);
-    if (count($matches) === 6) {
+    if (count($matches) === 7) {
         $data['name'] = $matches[3];
     }
 
@@ -1868,6 +1869,9 @@ function html_edit(){
     $form->addHidden('target', $data['target']);
     if ($INPUT->has('hid')) {
         $form->addHidden('hid', $INPUT->str('hid'));
+    }
+    if ($INPUT->has('codeblockOffset')) {
+        $form->addHidden('codeblockOffset', $INPUT->str('codeblockOffset'));
     }
     $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar', 'class'=>'editBar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
